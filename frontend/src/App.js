@@ -1,8 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function App() {
-  return (
-	<div>App</div>
-  )
+	return <div className="m-auto">App</div>;
 }
-
