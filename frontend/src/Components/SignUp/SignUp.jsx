@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Registration_Form from "./Forms/Registration_Form";
 import Login_Form from "./Forms/Login_Form";
