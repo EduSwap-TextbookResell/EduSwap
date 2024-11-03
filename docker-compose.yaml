@@ -14,13 +14,13 @@ services:
 
   api:
     container_name: api
-    build: .
+    build: ./backend
     user: ${UID}:${GID}
     restart: always
     ports:
-      - "3000:3000"
+      - ${PORT}:${PORT}
     volumes:
-      - .:/api
+      - ./backend:/api
     depends_on:
       - mongo
 

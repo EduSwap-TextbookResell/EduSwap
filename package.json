@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "dev": "",
+    "dev": "docker compose --env-file backend/.env up",
     "format": "pnpm -C backend run format && pnpm -C backend run format",
     "lint": "pnpm -C backend run lint && pnpm -C backend run lint"
   },

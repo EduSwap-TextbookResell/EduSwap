@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
         winston.format.colorize(),
         winston.format.timestamp(),
         winston.format.printf((info) => {
-          return `${info.level}: ${info.message.status} ${info.message.method} ${info.message.url}`;
+          return `${info.level}: ${info.message.method} ${info.message.url}`;
         }),
       ),
     }),

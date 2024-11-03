@@ -22,7 +22,6 @@ app.use((req, res, next) => {
   logger.http({
     method: req.method,
     url: req.url,
-    status: res.statusCode,
     headers: req.headers,
     body: req.body,
     params: req.params,
