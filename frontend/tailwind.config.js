@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx}"
-  ],
+export default {
+  content: ['./src/**/*.{js,jsx}'],
   theme: {
     colors: {
       light_background: '#EAE7DC',
@@ -11,10 +9,9 @@ module.exports = {
       light_gray: '#E9E9E9',
       light_coral: '#E98074',
       dark_coral: '#E85A4F',
-      light_very_gray:"#FBFBFB"
+      light_very_gray: '#FBFBFB',
     },
     extend: {},
   },
   plugins: [],
-}
-
+};
