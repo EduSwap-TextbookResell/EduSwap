@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon -q server.js",
+    "start": "node server.js",
+    "lint": "eslint --fix './**/*.{js,cjs,mjs}'",
+    "format": "prettier --write './**/*.{js,cjs,mjs,md,json}'",
+    "lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "winston": "^3.15.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^15.11.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3"
+  },
+  "packageManager": "pnpm@9.12.0"
+}
