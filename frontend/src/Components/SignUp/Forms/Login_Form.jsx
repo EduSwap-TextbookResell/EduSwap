@@ -9,12 +9,12 @@ export default function Login_Form() {
   };
   return (
     <div>
-      <p className="ml-24 flex text-center">
+      <div className="ml-24 flex text-center">
         Witamy w <p className="ml-2 text-dark_coral">E</p>du
         <p className="text-dark_coral">S</p>wap!
-      </p>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <p className="m-1 mt-40">
+        <div className="m-1 mt-40">
           <TextField
             label="Nick"
             required
@@ -30,9 +30,9 @@ export default function Login_Form() {
               },
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="m-1 mt-4">
+        <div className="m-1 mt-4">
           <TextField
             label="Haslo"
             required
@@ -48,17 +48,17 @@ export default function Login_Form() {
               },
             })}
           />
-        </p>
+        </div>
 
         <br />
-        <p className="mb-6 mt-32 text-center">
+        <div className="mb-6 mt-32 text-center">
           Nie masz konta?{' '}
           <Link to="/signup/register" className="text-dark_coral">
             {' '}
             Zarejestruj się
           </Link>
-        </p>
-        <p className="ml-5 mt-6">
+        </div>
+        <div className="ml-5 mt-6">
           <Button
             variant="contained"
             type="submit"
@@ -66,7 +66,7 @@ export default function Login_Form() {
           >
             Zaloguj się
           </Button>
-        </p>
+        </div>
       </form>
     </div>
   );

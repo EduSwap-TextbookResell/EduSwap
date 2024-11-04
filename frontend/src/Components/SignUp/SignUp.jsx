@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import Registration_Form from './Forms/Registration_Form';
-import Login_Form from './Forms/Login_Form';
+import Registration_Form from './Forms/Registration_Form.jsx';
+import Login_Form from './Forms/Login_Form.jsx';
 import background_img from '../../assets/Main/background.png';
-import Info_panel from './Addons/Info_panel';
+import Info_panel from './Addons/Info_panel.jsx';
 //!!! npm install @mui/material @emotion/react @emotion/styled  npm install react-hook-form
 
 export default function SignUp() {
