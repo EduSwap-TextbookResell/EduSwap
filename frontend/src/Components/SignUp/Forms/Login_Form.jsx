@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 export default function Login_Form() {
-  const { register: login, handleSubmit } = useForm();
+  const { register: login, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -17,39 +17,40 @@ export default function Login_Form() {
         <div className="m-1 mt-40">
           <TextField
             label="Nick"
-            required
+            error={!!errors.nick}
             variant="outlined"
             sx={{ width: '40ch' }}
             size="small"
             {...login('nick', {
-              required: 'Nick is required',
+              required: 'Nick jest wymagany',
               pattern: {
                 value: /^[A-Za-z0-9_]+$/i,
                 message:
-                  'Nick can only contain letters, numbers, and underscores',
+                  'Nick może posiadać tylko literki, cyferki oraz podłogi',
               },
             })}
           />
         </div>
+        {errors.nick && <Typography color='error'>{errors.nick.message}</Typography>}
         <br />
         <div className="m-1 mt-4">
           <TextField
             label="Haslo"
-            required
+            error={!!errors.password}
             variant="outlined"
             type="password"
             sx={{ width: '40ch' }}
             size="small"
             {...login('password', {
-              required: 'Password is required',
+              required: 'Hasło jest wymagane',
               minLength: {
                 value: 6,
-                message: 'Password must be at least 6 characters long',
+                message: 'Hasło musi posiadać min. 6 znaków',
               },
             })}
           />
         </div>
-
+        {errors.password && <Typography color='error'>{errors.password.message}</Typography>}
         <br />
         <div className="mb-6 mt-32 text-center">
           Nie masz konta?{' '}

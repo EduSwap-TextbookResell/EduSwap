@@ -5,21 +5,29 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+
 export default function RegistrationForm() {
-  const { register, handleSubmit, setValue } = useForm();
-  const [school, setSchool] = React.useState('');
+  const { register, handleSubmit, setValue, watch, trigger, formState: { errors } } = useForm();
+  const city = watch('city');
+  const school = watch('school');
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
-  const handleChange = (event) => {
+  const change_city = (event) => {
     const value = event.target.value;
-    setSchool(value);
+    setValue('city', value);
+    trigger('city');
+  };
+
+  const change_school = (event) => {
+    const value = event.target.value;
     setValue('school', value);
+    trigger('school');
   };
 
   return (
@@ -32,7 +40,7 @@ export default function RegistrationForm() {
         <div className="m-1">
           <TextField
             label="Mail"
-            required
+            error={!!errors.email}
             variant="outlined"
             sx={{ width: '40ch' }}
             size="small"
@@ -44,12 +52,13 @@ export default function RegistrationForm() {
               },
             })}
           />
+          {errors.email && <Typography color="error">{errors.email.message}</Typography>}
         </div>
         <br />
         <div className="m-1">
           <TextField
             label="Nick"
-            required
+            error={!!errors.nick}
             variant="outlined"
             sx={{ width: '40ch' }}
             size="small"
@@ -62,41 +71,66 @@ export default function RegistrationForm() {
               },
             })}
           />
+          {errors.nick && <Typography color="error">{errors.nick.message}</Typography>}
         </div>
         <br />
-        <div className="m-1">
-          <TextField
-            label="Miasto"
-            required
-            variant="outlined"
-            sx={{ width: '40ch' }}
-            size="small"
-            {...register('city', {
-              required: 'Miasto jest wymagane',
-              pattern: {
-                value: /^[A-Za-z]+$/i,
-                message: 'Miasto składa się tylko z literek',
-              },
-            })}
-          />
-        </div>
-        <br />
-        <div className="m-1 mt-[-1%]">
+        <div className="m-1 mb-2 mt-[-1%]">
           <Box sx={{ Width: 300 }}>
             <FormControl fullWidth>
-              <InputLabel id="select-label">Wybierz szkołę</InputLabel>
+              <InputLabel id="select-label">Wybierz miasto</InputLabel>
               <Select
                 labelId="select-label"
-                required
+                error={!!errors.city}
                 id="simple-select"
-                value={school}
-                label="Szkola"
-                onChange={handleChange}
+                value={city}
+                label="Miasto"
+                onChange={change_city}
                 sx={{
                   width: '39ch',
                   top: '-5px',
                   transform: 'translate(0, 12px) scale(1)',
                 }}
+                {...register('city', {
+                  required:'Wybranie miasta jest wymagane',
+                  
+                })}
+                size="small"
+              >
+                <MenuItem value={'city1'}>
+                  Szczecin
+                </MenuItem>
+                <MenuItem value={'city2'}>
+                  Warszawa
+                </MenuItem>
+                <MenuItem value={'city3'}>Kraków</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          
+        </div>
+        {errors.city && <Typography color="error">{errors.city.message}</Typography>}
+        <br />
+        <div className="m-1 mb-2 mt-[-1%]">
+          <Box sx={{ Width: 300 }}>
+            <FormControl fullWidth>
+              <InputLabel id="select-label">Wybierz szkołę</InputLabel>
+              <Select
+                labelId="select-label"
+                disabled={!city}  
+                error={!!errors.school}
+                id="simple-select"
+                value={school}
+                label="Szkola"
+                onChange={change_school}
+                sx={{
+                  width: '39ch',
+                  top: '-5px',
+                  transform: 'translate(0, 12px) scale(1)',
+                }}
+                {...register('school', {
+                  required:'Wybranie szkoly jest wymagane',
+                  
+                })}
                 size="small"
               >
                 <MenuItem value={'szkola1'}>
@@ -110,11 +144,12 @@ export default function RegistrationForm() {
             </FormControl>
           </Box>
         </div>
+        {errors.school && <Typography color="error">{errors.school.message}</Typography>}
         <br />
         <div className="m-1">
           <TextField
             label="Haslo"
-            required
+            error={!!errors.password}
             variant="outlined"
             type="password"
             sx={{ width: '40ch' }}
@@ -127,12 +162,13 @@ export default function RegistrationForm() {
               },
             })}
           />
+          {errors.password && <Typography color="error">{errors.password.message}</Typography>}
         </div>
         <br />
         <div className="m-1">
           <TextField
             label="Powtorz haslo"
-            required
+            error={!!errors.confirmPassword}
             variant="outlined"
             type="password"
             sx={{ width: '40ch' }}
@@ -143,6 +179,7 @@ export default function RegistrationForm() {
                 value === data.password || 'Hasła się nie zgadzają',
             })}
           />
+          {errors.confirmPassword && <Typography color="error">{errors.confirmPassword.message}</Typography>}
         </div>
         <br />
         <div className="mb-6 text-center">
