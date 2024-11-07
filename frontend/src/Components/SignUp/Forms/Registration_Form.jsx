@@ -1,5 +1,6 @@
-import React from 'react';
+//import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,9 +14,11 @@ export default function RegistrationForm() {
   const { register, handleSubmit, setValue, watch, trigger, formState: { errors } } = useForm();
   const city = watch('city');
   const school = watch('school');
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
+    navigate('/', { state: { user: data } });
   };
 
   const change_city = (event) => {

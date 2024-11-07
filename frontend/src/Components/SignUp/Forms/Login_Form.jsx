@@ -1,12 +1,17 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 export default function Login_Form() {
   const { register: login, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
     console.log(data);
+    navigate('/', { state: { user: data } });
   };
+  
   return (
     <div>
       <div className="ml-24 flex text-center">
@@ -31,7 +36,7 @@ export default function Login_Form() {
             })}
           />
         </div>
-        {errors.nick && <Typography color='error'>{errors.nick.message}</Typography>}
+        {errors.nick && <Typography color='error' style={{ position: 'absolute'}}>{errors.nick.message}</Typography>}
         <br />
         <div className="m-1 mt-4">
           <TextField
@@ -50,7 +55,7 @@ export default function Login_Form() {
             })}
           />
         </div>
-        {errors.password && <Typography color='error'>{errors.password.message}</Typography>}
+        {errors.password && <Typography color='error' style={{ position: 'absolute'}}>{errors.password.message}</Typography>}
         <br />
         <div className="mb-6 mt-32 text-center">
           Nie masz konta?{' '}

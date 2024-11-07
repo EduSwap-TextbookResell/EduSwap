@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 export default function Navbar(props) {
 	const [menu, setMenu] = useState(false);
-
+	const location = useLocation();
+	const user = location.state?.user;
 	return (
 		<div>
 			<div className="flex flex-row justify-between px-8">
@@ -12,7 +13,7 @@ export default function Navbar(props) {
 				</div>
 				<div>
 					{props.user ? (
-						<div onClick={()=>setMenu(!menu)} className="select-none">Hello {props.user.name}</div>
+						<div onClick={()=>setMenu(!menu)} className="select-none">Hello {user.nick}</div>
 					) : (
 						<div>
 							<Link to="/signup/login">Login</Link>
