@@ -6,11 +6,11 @@ export default function Navbar(props) {
 	const location = useLocation();
 	const user = location.state?.user;
 	return (
-		<div>
+		<div className="w-[96rem] h-14 bg-light_very_gray">
 			<div className="flex flex-row justify-between px-8">
-				<div>
+				{/* <div>
 					<img src="../../assets/Login_Registration/hand_money.png" alt="" />
-				</div>
+				</div> */}
 				<div>
 					{props.user ? (
 						<div onClick={()=>setMenu(!menu)} className="select-none">Hello {user.nick}</div>
