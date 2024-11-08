@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Components/Main/Home';
-import SignUp from './Components/SignUp/SignUp';
+import Home from './Components/Main/Home.jsx';
+import SignUp from './Components/SignUp/SignUp.jsx';
 
 export default function App() {
   return (

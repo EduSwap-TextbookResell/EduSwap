@@ -24,12 +24,12 @@ export default function RegistrationForm() {
 
   return (
     <div>
-      <p className="mb-9 ml-24 flex text-center">
+      <div className="mb-9 ml-24 flex text-center">
         Witamy w <p className="ml-2 text-dark_coral">E</p>du
         <p className="text-dark_coral">S</p>wap!
-      </p>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <p className="m-1">
+        <div className="m-1">
           <TextField
             label="Mail"
             required
@@ -44,9 +44,9 @@ export default function RegistrationForm() {
               },
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="m-1">
+        <div className="m-1">
           <TextField
             label="Nick"
             required
@@ -62,9 +62,9 @@ export default function RegistrationForm() {
               },
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="m-1">
+        <div className="m-1">
           <TextField
             label="Miasto"
             required
@@ -79,9 +79,9 @@ export default function RegistrationForm() {
               },
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="m-1 mt-[-1%]">
+        <div className="m-1 mt-[-1%]">
           <Box sx={{ Width: 300 }}>
             <FormControl fullWidth>
               <InputLabel id="select-label">Wybierz szkołę</InputLabel>
@@ -109,9 +109,9 @@ export default function RegistrationForm() {
               </Select>
             </FormControl>
           </Box>
-        </p>
+        </div>
         <br />
-        <p className="m-1">
+        <div className="m-1">
           <TextField
             label="Haslo"
             required
@@ -127,9 +127,9 @@ export default function RegistrationForm() {
               },
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="m-1">
+        <div className="m-1">
           <TextField
             label="Powtorz haslo"
             required
@@ -143,16 +143,16 @@ export default function RegistrationForm() {
                 value === data.password || 'Hasła się nie zgadzają',
             })}
           />
-        </p>
+        </div>
         <br />
-        <p className="mb-6 text-center">
+        <div className="mb-6 text-center">
           Masz już konto?{' '}
           <Link to="/signup/login" className="text-dark_coral">
             {' '}
             Zaloguj się
           </Link>
-        </p>
-        <p className="ml-5 mt-2">
+        </div>
+        <div className="ml-5 mt-2">
           <Button
             variant="contained"
             type="submit"
@@ -160,7 +160,7 @@ export default function RegistrationForm() {
           >
             Zarejestruj się
           </Button>
-        </p>
+        </div>
       </form>
     </div>
   );
