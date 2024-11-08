@@ -50,7 +50,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.registerUser = async function () {
   try {
     const salt = bcrypt.genSaltSync(10);
-    this.password = bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
     await this.save();
   } catch (err) {
     console.error(err);
