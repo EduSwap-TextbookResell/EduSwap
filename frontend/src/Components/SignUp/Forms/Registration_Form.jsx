@@ -1,4 +1,6 @@
+//import React from 'react';
 import { useForm } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -6,7 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
 
 export default function RegistrationForm() {
 	const {
@@ -19,11 +20,13 @@ export default function RegistrationForm() {
 	} = useForm();
 	const city = watch("city", "");
 	const school = watch("school", "");
+	const navigate = useNavigate();
 
 	const onSubmit = (data) => {
 		// eslint-disable-next-line no-unused-vars
-		const { confirmPassword, ...formData } = data;
-		console.log(formData);
+		const { confirmPassword, ...rest } = data;
+		console.log(rest);
+		navigate("/", { state: { user: data } });
 	};
 
 	const change_city = (event) => {
@@ -39,13 +42,14 @@ export default function RegistrationForm() {
 	};
 
 	return (
-		<div>
+		<div className="h-auto">
+			<div className="w-0 h-9"></div>
 			<div className="mb-9 ml-24 flex text-center">
 				Witamy w <p className="ml-2 text-dark_coral">E</p>du
 				<p className="text-dark_coral">S</p>wap!
 			</div>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="m-1">
+				<div className="m-1 mb-3">
 					<TextField
 						label="Mail"
 						error={!!errors.email}
@@ -60,28 +64,36 @@ export default function RegistrationForm() {
 							},
 						})}
 					/>
-					{errors.email && <Typography color="error">{errors.email.message}</Typography>}
+					{errors.email && (
+						<Typography color="error" style={{ position: "absolute" }}>
+							{errors.email.message}
+						</Typography>
+					)}
 				</div>
 				<br />
-				<div className="m-1">
+				<div className="m-1 mb-3">
 					<TextField
-						label="Username"
+						label="Nick"
 						error={!!errors.nick}
 						variant="outlined"
 						sx={{ width: "40ch" }}
 						size="small"
-						{...register("username", {
-							required: "Username jest wymagany",
+						{...register("nick", {
+							required: "Nick jest wymagany",
 							pattern: {
 								value: /^[A-Za-z0-9_]+$/i,
-								message: "Username może posiadać tylko literki, cyferki oraz podłogi",
+								message: "Nick może posiadać tylko literki, cyferki oraz podłogi",
 							},
 						})}
 					/>
-					{errors.nick && <Typography color="error">{errors.nick.message}</Typography>}
+					{errors.nick && (
+						<Typography color="error" style={{ position: "absolute" }}>
+							{errors.nick.message}
+						</Typography>
+					)}
 				</div>
 				<br />
-				<div className="m-1 mb-2 mt-[-1%]">
+				<div className="m-1 mb-3 mt-[-1%]">
 					<Box sx={{ Width: 300 }}>
 						<FormControl fullWidth>
 							<InputLabel id="select-label">Wybierz miasto</InputLabel>
@@ -109,7 +121,11 @@ export default function RegistrationForm() {
 						</FormControl>
 					</Box>
 				</div>
-				{errors.city && <Typography color="error">{errors.city.message}</Typography>}
+				{errors.city && (
+					<Typography color="error" style={{ position: "absolute" }}>
+						{errors.city.message}
+					</Typography>
+				)}
 				<br />
 				<div className="m-1 mb-2 mt-[-1%]">
 					<Box sx={{ Width: 300 }}>
@@ -140,9 +156,13 @@ export default function RegistrationForm() {
 						</FormControl>
 					</Box>
 				</div>
-				{errors.school && <Typography color="error">{errors.school.message}</Typography>}
+				{errors.school && (
+					<Typography color="error" style={{ position: "absolute" }}>
+						{errors.school.message}
+					</Typography>
+				)}
 				<br />
-				<div className="m-1">
+				<div className="m-1 mb-3">
 					<TextField
 						label="Haslo"
 						error={!!errors.password}
@@ -158,10 +178,14 @@ export default function RegistrationForm() {
 							},
 						})}
 					/>
-					{errors.password && <Typography color="error">{errors.password.message}</Typography>}
+					{errors.password && (
+						<Typography color="error" style={{ position: "absolute" }}>
+							{errors.password.message}
+						</Typography>
+					)}
 				</div>
 				<br />
-				<div className="m-1">
+				<div className="m-1 mb-3">
 					<TextField
 						label="Powtorz haslo"
 						error={!!errors.confirmPassword}
@@ -174,7 +198,11 @@ export default function RegistrationForm() {
 							validate: (value, data) => value === data.password || "Hasła się nie zgadzają",
 						})}
 					/>
-					{errors.confirmPassword && <Typography color="error">{errors.confirmPassword.message}</Typography>}
+					{errors.confirmPassword && (
+						<Typography color="error" style={{ position: "absolute" }}>
+							{errors.confirmPassword.message}
+						</Typography>
+					)}
 				</div>
 				<br />
 				<div className="mb-6 text-center">
@@ -190,6 +218,7 @@ export default function RegistrationForm() {
 					</Button>
 				</div>
 			</form>
+			<div className="w-0 h-9"></div>
 		</div>
 	);
 }
