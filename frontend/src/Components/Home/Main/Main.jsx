@@ -4,9 +4,9 @@ import Seller from "./Seller/Seller.jsx";
 import Messages from "./Messages/Messages.jsx";
 
 // zamienić ikony na svg
-import search_icon from "../../../assets/Main/search.png";
-import addbook_icon from "../../../assets/Main/addbook.png";
-import messages_icon from "../../../assets/Main/messages.png";
+import search_icon from "../../../assets/Main/search.svg";
+import addbook_icon from "../../../assets/Main/addbook.svg";
+import messages_icon from "../../../assets/Main/messages.svg";
 // ----------------------------
 
 export default function Main() {
