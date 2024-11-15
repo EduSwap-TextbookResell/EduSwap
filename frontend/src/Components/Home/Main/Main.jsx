@@ -15,7 +15,7 @@ export default function Main() {
 	const renderContent = () => {
 		switch (activeCard) {
 			case "Searcher":
-				return <Searcher />;
+				return <Searcher/>;
 			case "Seller":
 				return <Seller />;
 			case "Messages":
@@ -52,7 +52,7 @@ export default function Main() {
 				</div>
 
 				<div className="h-[80vh] w-[80vw] rounded-t-3xl bg-light_very_gray drop-shadow-2xl">
-					<div className="ml-10 mt-10">{renderContent()}</div>
+					<div className="mt-10">{renderContent()}</div>
 				</div>
 			</div>
 		</div>

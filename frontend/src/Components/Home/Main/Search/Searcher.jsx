@@ -63,7 +63,7 @@ export default function Searcher() {
   return (
     /* need ur opinion if this would be better way of doing the login and register imo- yesh it would be but i wanna hear ur thoughts abt it */
     <div>
-    <Box display="flex" alignItems="center" className="m-auto" gap={2}>
+    <Box display="flex" alignItems="center" className="ml-10" gap={2}>
       {options.map((option, index) => (
         <FormControl key={index} fullWidth size="small" sx={{ mr: 2 }}>
           <InputLabel id={`${option.label}-label`}>{option.label}</InputLabel>
@@ -87,7 +87,7 @@ export default function Searcher() {
         sx={{ 
           backgroundColor: "#E85A4F", 
           height: 'fit-content', 
-          mr: 2, 
+          mr: 5, 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center' 
@@ -105,8 +105,8 @@ export default function Searcher() {
       />
       Wyszukaj
     </Button>
-
     </Box>
+    <hr className="mt-7 border-light_gray" />
     </div>
   );
 }
