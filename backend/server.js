@@ -30,8 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// TODO: Data Validation, Github Ruleset, CD+Nginx+Docker
-
 mongoose
   .connect(dbConfig.url)
   .then(() => console.log('MongoDB Connected'))

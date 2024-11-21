@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd()); 
+  // eslint-disable-next-line no-undef
+  const env = loadEnv(mode, process.cwd());
   const PORT = `${env.VITE_CLIENT_PORT ?? '8080'}`;
 
   return {
@@ -20,5 +21,5 @@ export default defineConfig(({ mode }) => {
       host: true,
       historyApiFallback: true,
     },
-  }
+  };
 });
