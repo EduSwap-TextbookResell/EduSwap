@@ -19,13 +19,17 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.use((req, res, next) => {
+  const { method, url, headers, body, params, ip } = req;
   logger.http({
-    method: req.method,
-    url: req.url,
-    headers: req.headers,
-    body: req.body,
-    params: req.params,
-    ip: req.ip,
+    method,
+    url,
+    headers: {
+      ...headers,
+      authorization: '*****',
+    },
+    body: Object.keys(body).length > 0 ? body : undefined,
+    params,
+    ip,
   });
   next();
 });

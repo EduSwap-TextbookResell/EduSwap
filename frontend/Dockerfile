@@ -6,17 +6,27 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
-COPY . /app
 WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY . .
+
+EXPOSE ${CLIENT_PORT}
+
+# DEVELOPMENT
+
+FROM base AS development
+
+CMD [ "pnpm", "run", "dev" ]
+
+# PRODUCTION
 
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm run build
 
-FROM base AS release
+FROM base AS production
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
-
-EXPOSE 8080
 
 CMD [ "pnpm", "run", "preview" ]
