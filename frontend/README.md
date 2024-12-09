@@ -10,5 +10,5 @@ Currently, two official plugins are available:
 # How to run in dev
 
 1.  ```
-    npm run dev
+    pnpm run dev
     ```
