@@ -6,22 +6,22 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
-COPY . /api
-WORKDIR /api
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-
-FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY . .
 
-FROM base
-COPY --from=prod-deps /api/node_modules /api/node_modules
+EXPOSE ${SERVER_PORT}
 
-EXPOSE 3000
+# DEVELOPMENT
 
-# DEV
+FROM base AS development
+
 CMD [ "pnpm", "run", "dev" ]
 
-## PROD
-#CMD [ "pnpm", "run", "start" ]
+# PRODUCTION
+
+FROM base AS production
+
+CMD [ "pnpm", "run", "start" ]
