@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import logger from '../configs/logger.js';
+import logger from '../services/logger.js';
 import authRoutes from './authRoutes.js';
 import userRoutes from './userRoutes.js';
 
@@ -23,7 +23,7 @@ router.use((err, req, res, _next) => {
 
   logger.error(err);
 
-  res.status(err.statusCode || 500).json({
+  res.status(err.statusCode).json({
     error: err.message,
   });
 });

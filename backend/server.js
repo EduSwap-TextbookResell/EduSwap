@@ -4,9 +4,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
-import dbConfig from './src/configs/db.js';
-import logger from './src/configs/logger.js';
+import logger from './src/services/logger.js';
 import routes from './src/routes/index.js';
+import { config } from './src/configs/index.js';
 import './src/services/jwtStrategy.js';
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(passport.initialize());
 
 app.use((req, res, next) => {
   const { method, url, headers, body, params, ip } = req;
-  logger.http({
+  logger.info({
     method,
     url,
     headers: {
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(dbConfig.url)
+  .connect(config.db.url)
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => {
     console.error(err);

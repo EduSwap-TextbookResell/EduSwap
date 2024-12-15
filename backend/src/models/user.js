@@ -3,23 +3,23 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
-import secretOrKey from '../configs/jwt.js';
+import { config } from '../configs/index.js';
 
 const UserValidationSchema = z.object({
   username: z
     .string()
-    .min(3, 'Username must be at least 2 characters long')
-    .max(30, 'Username cannot exceed 20 characters')
+    .min(3, 'Username must be at least 3 characters long')
+    .max(30, 'Username cannot exceed 30 characters')
     .regex(
       /^(?=[a-zA-Z0-9._]{3,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-      'Username is invalid',
+      'Invalid username format',
     ),
   email: z.string().email('Invalid email format'),
   password: z
     .string()
     .min(6, 'Password must be at least 6 characters long')
     .max(60, 'Password cannot exceed 60 characters'),
-  role: z.enum(['ADMIN', 'USER']),
+  role: z.enum(['ADMIN', 'USER']).default('USER'),
   bio: z
     .string()
     .max(500, 'Bio cannot exceed 500 characters')
@@ -32,28 +32,28 @@ const UserSchema = new mongoose.Schema(
     username: {
       type: String,
       unique: true,
-      required: [true, "can't be blank"],
+      required: [true, 'Username is required'],
       minlength: 3,
       maxlength: 30,
       match: [
         /^(?=[a-zA-Z0-9._]{3,30}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-        'is invalid',
+        'Invalid username format',
       ],
       index: true,
     },
     email: {
       type: String,
       unique: true,
-      required: [true, "can't be blank"],
-      match: [/\S+@\S+\.\S+/, 'is invalid'],
+      required: [true, 'Email is required'],
+      match: [/.+@.+\..+/, 'Invalid email format'],
       index: true,
     },
     password: {
       type: String,
-      trim: true,
       required: [true, "can't be blank"],
       minlength: 6,
       maxlength: 60,
+      trim: true,
     },
     role: {
       type: String,
@@ -70,30 +70,19 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.methods.toJSON = function () {
-  return {
-    id: this._id,
-    email: this.email,
-    username: this.username,
-    role: this.role,
-    createdAt: this.createdAt,
-    updatedAt: this.updatedAt,
-  };
+  const { _id, username, email, role, createdAt, updatedAt } = this;
+  return { id: _id, username, email, role, createdAt, updatedAt };
 };
 
 UserSchema.methods.registerUser = async function () {
   try {
-    const userObject = {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      role: this.role,
-      bio: this.bio,
-    };
+    const { username, email, password, role, bio } = this;
 
-    UserValidationSchema.parse(userObject);
+    UserValidationSchema.parse({ username, email, password, role, bio });
 
-    const salt = bcrypt.genSaltSync(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(password, salt);
+
     await this.save();
   } catch (err) {
     console.error(err);
@@ -102,11 +91,11 @@ UserSchema.methods.registerUser = async function () {
 };
 
 UserSchema.methods.generateJWT = function () {
-  return jwt.sign({ id: this._id }, secretOrKey, { expiresIn: '1d' });
+  return jwt.sign({ id: this._id }, config.jwtSecret, { expiresIn: '1d' });
 };
 
-UserSchema.methods.comparePassword = function (candidatePassword) {
-  return bcrypt.compareSync(candidatePassword, this.password);
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 const User = mongoose.model('User', UserSchema);
