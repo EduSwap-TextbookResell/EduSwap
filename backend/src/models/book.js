@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
-// import { z } from 'zod';
-//
-// const BookValidationSchema = z.object({
-//   title: z.string().min(1, 'Title is required'),
-//   subject: z.string().min(1, 'Subject is required'),
-//   type: z.enum(['coursebook', 'workbook', 'other']),
-//   class: z.number().min(1).max(8).optional().nullable(),
-//   isbn: z.string().optional().nullable(),
-//   level: z.enum(['base', 'extended', 'other']),
-// });
+import { z } from 'zod';
+
+const BookValidationSchema = z.object({
+  title: z.string().min(6, 'Title is required'),
+  subject: z.string().min(2, 'Subject is required'),
+  type: z.enum(['coursebook', 'workbook', 'other']),
+  class: z.number().min(1).max(8).optional().nullable(),
+  isbn: z.string().length(17).optional().nullable(),
+  level: z.enum(['base', 'extended', 'other']),
+  verified: z.boolean().default(false),
+});
 
 const BookSchema = new mongoose.Schema(
   {
@@ -40,13 +41,67 @@ const BookSchema = new mongoose.Schema(
       enum: ['base', 'extended', 'other'],
       required: true,
     },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: false },
-); // checked - boolean field changed by admin to true, default false
+);
 
 BookSchema.methods.toJSON = function () {
-  const { _id, title, subject, type, class: bookClass, isbn, level } = this;
-  return { id: _id, title, subject, type, class: bookClass, isbn, level };
+  const {
+    _id,
+    title,
+    subject,
+    type,
+    class: bookClass,
+    isbn,
+    level,
+    verified,
+  } = this;
+  return {
+    id: _id,
+    title,
+    subject,
+    type,
+    class: bookClass,
+    isbn,
+    level,
+    verified,
+  };
+};
+
+BookSchema.methods.createBook = async function () {
+  try {
+    const {
+      id,
+      title,
+      subject,
+      type,
+      class: bookClass,
+      isbn,
+      level,
+      verified,
+    } = this;
+
+    BookValidationSchema.parse({
+      id,
+      title,
+      subject,
+      type,
+      class: bookClass,
+      isbn,
+      level,
+      verified,
+    });
+
+    await this.save();
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const Book = mongoose.model('Book', BookSchema);

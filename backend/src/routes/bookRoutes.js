@@ -5,10 +5,10 @@ import requireJwtAuth from '../middlewares/requireJwtAuth.js';
 
 const router = Router();
 
+router.get('/:id', requireJwtAuth, bookController.getOne);
 router.get('/', requireJwtAuth, bookController.get);
-router.get('/:book', requireJwtAuth, bookController.getOne);
 router.post('/', requireJwtAuth, bookController.create);
-router.put('/:id', requireJwtAuth, bookController.update); // TODO: require admin or self
-router.delete('/:id', requireJwtAuth, bookController.remove); // TODO: require admin or self
+router.put('/:id', requireJwtAuth, bookController.update); // TODO: require admin or self, when verified only admin
+router.delete('/:id', requireJwtAuth, bookController.remove); // TODO: require admin or self, when verified only admin
 
 export default router;

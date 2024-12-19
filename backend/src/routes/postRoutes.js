@@ -5,8 +5,8 @@ import requireJwtAuth from '../middlewares/requireJwtAuth.js';
 
 const router = Router();
 
+router.get('/:id', requireJwtAuth, postController.getOne);
 router.get('/', requireJwtAuth, postController.get);
-router.get('/:book', requireJwtAuth, postController.getOne);
 router.post('/', requireJwtAuth, postController.create);
 router.put('/:id', requireJwtAuth, postController.update); // TODO: require admin or self
 router.delete('/:id', requireJwtAuth, postController.remove); // TODO: require admin or self

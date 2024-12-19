@@ -29,7 +29,7 @@ router.use((err, req, res, _next) => {
 
   logger.error(err);
 
-  res.status(err.statusCode).json({
+  res.status(err.statusCode || 500).json({
     error: err.message,
   });
 });

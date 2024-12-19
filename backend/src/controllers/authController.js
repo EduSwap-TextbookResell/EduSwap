@@ -1,10 +1,14 @@
 import User from '../models/user.js';
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
+
+  const query = {};
+  if (email) query.email = email;
+  else query.username = { $regex: `^${username}$`, $options: 'i' };
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne(query);
     if (!user) {
       return res.status(401).send({ message: 'User does not exist' });
     }
@@ -26,10 +30,17 @@ const register = async (req, res, next) => {
   const { email, password, username } = req.body;
 
   try {
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await User.findOne({
+      $or: [
+        { email },
+        { username: { $regex: `^${username}$`, $options: 'i' } },
+      ],
+    });
     if (existingUser) {
       const message =
-        existingUser.email === email ? 'Email is in use' : 'Username is in use';
+        existingUser.email === email
+          ? 'Email already in use'
+          : 'Username already in use';
       return res.status(409).json({ message });
     }
 
