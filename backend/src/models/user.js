@@ -25,6 +25,8 @@ const UserValidationSchema = z.object({
     .max(500, 'Bio cannot exceed 500 characters')
     .optional()
     .nullable(),
+  city: z.string().optional().nullable(),
+  school: z.string().optional().nullable(),
 });
 
 const UserSchema = new mongoose.Schema(
@@ -50,7 +52,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "can't be blank"],
+      required: [true, 'Password is required'],
       minlength: 6,
       maxlength: 60,
       trim: true,
@@ -65,20 +67,56 @@ const UserSchema = new mongoose.Schema(
       maxlength: 500,
       default: null,
     },
+    city: {
+      type: String,
+      default: null,
+    },
+    school: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true },
 );
 
 UserSchema.methods.toJSON = function () {
-  const { _id, username, email, role, createdAt, updatedAt } = this;
-  return { id: _id, username, email, role, createdAt, updatedAt };
+  const {
+    _id,
+    username,
+    email,
+    role,
+    bio,
+    city,
+    school,
+    createdAt,
+    updatedAt,
+  } = this;
+  return {
+    id: _id,
+    username,
+    email,
+    role,
+    bio,
+    city,
+    school,
+    createdAt,
+    updatedAt,
+  };
 };
 
 UserSchema.methods.registerUser = async function () {
   try {
-    const { username, email, password, role, bio } = this;
+    const { username, email, password, role, bio, city, school } = this;
 
-    UserValidationSchema.parse({ username, email, password, role, bio });
+    UserValidationSchema.parse({
+      username,
+      email,
+      password,
+      role,
+      bio,
+      city,
+      school,
+    });
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(password, salt);
