@@ -1,13 +1,26 @@
 import mongoose from 'mongoose';
-// import { z } from 'zod';
-//
-// const PostValidationSchema = z.object({
-//   city: z.string().optional().nullable(),
-//   school: z.string().optional().nullable(),
-//   state: z.enum(['new', 'used', 'completed']),
-//   additionalInfo: z.string().max(1000).optional().nullable(),
-//   price: z.number().min(0),
-// });
+import logger from '../services/logger.js';
+import { z } from 'zod';
+
+const PostValidationSchema = z.object({
+  city: z
+    .string()
+    .max(100, { message: 'City name must not exceed 100 characters' })
+    .optional()
+    .nullable(),
+  school: z
+    .string()
+    .max(100, { message: 'School name must not exceed 100 characters' })
+    .optional()
+    .nullable(),
+  state: z.enum(['new', 'used', 'completed']),
+  additionalInfo: z
+    .string()
+    .max(1000, { message: 'Additional info must not exceed 1000 characters' })
+    .optional()
+    .nullable(),
+  price: z.number().min(0, { message: 'Price must be a non-negative number' }),
+});
 
 const PostSchema = new mongoose.Schema(
   {
@@ -73,6 +86,25 @@ PostSchema.methods.toJSON = function () {
     createdAt,
     updatedAt,
   };
+};
+
+PostSchema.methods.createPost = async function () {
+  try {
+    const { city, school, state, additionalInfo, price } = this;
+
+    PostValidationSchema.parse({
+      city,
+      school,
+      state,
+      additionalInfo,
+      price,
+    });
+
+    await this.save();
+  } catch (err) {
+    logger.error(err);
+    throw err;
+  }
 };
 
 const Post = mongoose.model('Post', PostSchema);

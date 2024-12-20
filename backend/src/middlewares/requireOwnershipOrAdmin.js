@@ -11,6 +11,7 @@ const requireOwnershipOrAdmin = (req, res, next) => {
     const resourceId = req.params.id;
 
     if (decoded.id === resourceId || decoded.role === 'ADMIN') {
+      req.user = { id: decoded.id, role: decoded.role };
       return next();
     }
     return res

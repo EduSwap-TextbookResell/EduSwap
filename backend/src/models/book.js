@@ -83,7 +83,6 @@ BookSchema.methods.toJSON = function () {
 BookSchema.methods.createBook = async function () {
   try {
     const {
-      id,
       title,
       subject,
       type,
@@ -94,7 +93,6 @@ BookSchema.methods.createBook = async function () {
     } = this;
 
     BookValidationSchema.parse({
-      id,
       title,
       subject,
       type,

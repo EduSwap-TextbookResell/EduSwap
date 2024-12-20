@@ -1,5 +1,5 @@
-import { config } from '../configs/index.js';
 import Book from '../models/book.js';
+import { config } from '../configs/index.js';
 
 const get = async (req, res, next) => {
   const limit = parseInt(req.query.limit) || config.general.itemsPerPage;
@@ -44,11 +44,12 @@ const getOne = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
-  const { title, subject, type, class: bookClass, isbn, level } = req.body;
+  const book = req.body;
+  book.user = req.user.id;
 
   const query = {};
-  if (isbn) query.isbn = { $regex: `^${isbn}$`, $options: 'i' };
-  if (title) query.title = { $regex: `^${title}$`, $options: 'i' };
+  if (book.isbn) query.isbn = { $regex: `^${book.isbn}$`, $options: 'i' };
+  if (book.title) query.title = { $regex: `^${book.title}$`, $options: 'i' };
 
   try {
     const existingBook = await Book.findOne(query);
@@ -57,12 +58,7 @@ const create = async (req, res, next) => {
     }
 
     const newBook = new Book({
-      title,
-      subject,
-      type,
-      class: bookClass,
-      isbn,
-      level,
+      ...book,
       verified: false,
     });
 
@@ -75,6 +71,7 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const book = req.body;
+  book.user = req.user.id;
   const { id } = req.params;
 
   try {

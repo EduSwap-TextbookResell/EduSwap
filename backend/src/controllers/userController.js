@@ -1,5 +1,7 @@
-import { config } from '../configs/index.js';
+import bcrypt from 'bcryptjs';
+
 import User from '../models/user.js';
+import { config } from '../configs/index.js';
 
 const get = async (req, res, next) => {
   const limit = parseInt(req.query.limit) || config.general.itemsPerPage;
@@ -44,9 +46,15 @@ const getOne = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const user = req.body;
+  if (req.user.role === 'USER') {
+    user.role = 'USER';
+  }
   const { id } = req.params;
 
   try {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+
     const updatedUser = await User.findByIdAndUpdate(id, user, {
       new: true,
     });
