@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
+import logger from '../services/logger.js';
+
 const BookValidationSchema = z.object({
   title: z.string().min(6, 'Title is required'),
   subject: z.string().min(2, 'Subject is required'),
@@ -19,6 +21,11 @@ const BookSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
+      required: true,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     type: {
@@ -99,7 +106,7 @@ BookSchema.methods.createBook = async function () {
 
     await this.save();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     throw err;
   }
 };

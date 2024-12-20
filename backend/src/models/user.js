@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
+import logger from '../services/logger.js';
 import { config } from '../configs/index.js';
 
 const UserValidationSchema = z.object({
@@ -123,13 +124,15 @@ UserSchema.methods.registerUser = async function () {
 
     await this.save();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     throw err;
   }
 };
 
 UserSchema.methods.generateJWT = function () {
-  return jwt.sign({ id: this._id }, config.jwtSecret, { expiresIn: '1d' });
+  return jwt.sign({ id: this._id, role: this.role }, config.jwtSecret, {
+    expiresIn: '1d',
+  });
 };
 
 UserSchema.methods.comparePassword = async function (candidatePassword) {
