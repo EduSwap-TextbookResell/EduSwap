@@ -59,19 +59,38 @@ export default function Searcher() {
       ],
     },
   ];
-
   return (
     /* need ur opinion if this would be better way of doing the login and register imo- yesh it would be but i wanna hear ur thoughts abt it */
     <div>
     <Box display="flex" alignItems="center" className="ml-10" gap={2}>
       {options.map((option, index) => (
         <FormControl key={index} fullWidth size="small" sx={{ mr: 2 }}>
-          <InputLabel id={`${option.label}-label`}>{option.label}</InputLabel>
+          <InputLabel id={`${option.label}-label`} sx={{
+      color: 'lightcoral',
+      '&.Mui-focused': { color: 'lightcoral' },
+    }}>{option.label}</InputLabel>
           <Select
             labelId={`${option.label}-label`}
             value={option.value}
-            label={option.label}
+            label={option.label}  
             onChange={option.onChange}
+            className="shadow-lg blur-[0.5px]"
+            sx={{
+              borderRadius: '11px',
+              '& .MuiSelect-select': {
+                borderRadius: '11px',
+              },
+              ".MuiOutlinedInput-notchedOutline": { border: 2, borderColor: "lightcoral" },
+              "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                {
+                  border: 2,borderColor: "lightcoral"
+                },
+              "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                {
+                  border: 2,borderColor: "lightcoral"
+                },
+                '.MuiSelect-icon':{color:"lightcoral"}
+            }}
           >
             {option.items.map((item, idx) => (
               <MenuItem key={idx} value={item.value}>{item.label}</MenuItem>
