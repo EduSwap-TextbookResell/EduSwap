@@ -12,7 +12,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY . .
 
-EXPOSE ${SERVER_PORT}
+EXPOSE ${CLIENT_PORT}
 
 # DEVELOPMENT
 
@@ -22,6 +22,11 @@ CMD [ "pnpm", "run", "dev" ]
 
 # PRODUCTION
 
-FROM base AS production
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm run build
 
-CMD [ "pnpm", "run", "start" ]
+FROM base AS production
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/dist /app/dist
+
+CMD [ "pnpm", "run", "preview" ]

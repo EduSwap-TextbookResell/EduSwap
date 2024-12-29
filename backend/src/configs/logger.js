@@ -1,5 +1,6 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
+import path from 'path';
 
 const logger = winston.createLogger({
   level: 'debug',
@@ -7,16 +8,17 @@ const logger = winston.createLogger({
     winston.format.timestamp(),
     winston.format.json({ space: 2 }),
     winston.format.printf((info) => {
-      return JSON.stringify({
-        timestamp: info.timestamp,
-        level: info.level,
-        message: info.message,
-      });
+      const logMessage =
+        typeof info.message === 'object'
+          ? JSON.stringify(info.message, null, 2)
+          : info.message;
+      return `[${info.timestamp}] ${info.level.toUpperCase()}: ${logMessage}`;
     }),
   ),
   transports: [
     new DailyRotateFile({
-      filename: 'logs/logs-%DATE%.log',
+      dirname: path.resolve('logs'),
+      filename: 'logs-%DATE%.log',
       datePattern: 'YYYY-MM-DD',
       zippedArchive: true,
       maxSize: '20m',
@@ -32,7 +34,11 @@ if (process.env.NODE_ENV === 'development') {
         winston.format.colorize(),
         winston.format.timestamp(),
         winston.format.printf((info) => {
-          return `${info.level}: ${info.message.method} ${info.message.url}`;
+          const logMessage =
+            typeof info.message === 'object'
+              ? JSON.stringify(info.message, null, 2)
+              : info.message;
+          return `[${info.timestamp}] ${info.level}: ${logMessage}`;
         }),
       ),
     }),

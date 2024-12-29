@@ -4,7 +4,7 @@ import img3 from '../../../assets/Login_Registration/3hands_3books.png';
 
 export default function Info_panel() {
   return (
-    <div className="h-full w-full md:h-[86vh] md:w-[30vw] rounded-[53px] bg-dark_coral text-light_background p-6 flex flex-col justify-between opacity-70">
+    <div className="h-full w-full md:h-[86vh] md:w-[30vw] rounded-[8px] bg-dark_coral text-light_background p-6 flex flex-col justify-between opacity-70 overflow-hidden">
       {/* Section 1 */}
       <div className="text-center">
         <p className="text-lg font-semibold">Sprzedawaj swoje książki</p>

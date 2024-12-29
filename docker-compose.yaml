@@ -5,7 +5,7 @@ services:
     command: mongod --quiet --logpath /dev/null 2>&1
     restart: always
     ports:
-      - "27017:27017"
+      - ${DB_PORT}:27017
     volumes:
       - mongo-data:/data/db
     environment:
@@ -14,15 +14,38 @@ services:
 
   api:
     container_name: api
-    build: ./backend
+    build:
+      context: ./backend
+      target: ${NODE_ENV}
     user: ${UID}:${GID}
     restart: always
     ports:
-      - ${PORT}:${PORT}
+      - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
-      - ./backend:/api
+      - ./backend/logs:/app/logs
+    environment:
+      - NODE_ENV
+      - SERVER_PORT
+      - DB_HOST
+      - DB_USER
+      - DB_PASSWORD
+      - DB_NAME
+      - DB_PORT
+      - JWT_SECRET_DEV
+      - JWT_SECRET_PROD
     depends_on:
       - mongo
+
+  client:
+    container_name: client
+    build:
+      context: ./frontend
+      target: ${NODE_ENV}
+    restart: always
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    environment:
+      - CLIENT_PORT
 
 volumes:
   mongo-data:

@@ -30,10 +30,10 @@ export default function SignUp() {
 
 			<div className="login_main_area flex flex-col lg:flex-row max-h-[90vh] sm:w-[65vw] w-[90vw] max-w-[1200px] rounded-3xl bg-light_very_gray overflow-hidden">
 				{/* Main Form Area */}
-				<div className="flex-1 flex items-center justify-center overflow-y-auto">{isLogin ? <Login_Form /> : <Registration_Form />}</div>
+				<div className="flex-1 flex justify-center overflow-y-auto">{isLogin ? <Login_Form /> : <Registration_Form />}</div>
 
 				{/* Info Panel: Hidden on small screens */}
-				<div className="hidden lg:flex flex-1 items-center justify-center overflow-hidden">
+				<div className="hidden lg:flex flex-1 items-center justify-end pr-4 overflow-hidden py-4">
 					<Info_panel />
 				</div>
 			</div>
