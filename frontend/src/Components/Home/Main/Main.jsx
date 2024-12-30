@@ -51,7 +51,7 @@ export default function Main() {
 					))}
 				</div>
 
-				<div className="h-[80vh] w-[80vw] rounded-t-3xl bg-light_very_gray drop-shadow-2xl">
+				<div className="h-[80vh] w-[80vw] rounded-t-3xl bg-light_very_gray drop-shadow-2xl overflow-y-auto scroll-smooth">
 					<div className="mt-10">{renderContent()}</div>
 				</div>
 			</div>
