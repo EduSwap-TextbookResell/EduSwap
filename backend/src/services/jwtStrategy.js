@@ -1,14 +1,14 @@
 import passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import secretOrKey from '../configs/jwt.js';
 
 import User from '../models/user.js';
+import { config } from '../configs/index.js';
 
 passport.use(
   new Strategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey,
+      secretOrKey: config.jwtSecret,
     },
     function (payload, done) {
       User.findById(payload.id)

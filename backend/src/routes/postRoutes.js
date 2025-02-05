@@ -1,24 +1,25 @@
 import { Router } from 'express';
 
-import userController from '../controllers/userController.js';
+import postController from '../controllers/postController.js';
 import requireJwtAuth from '../middlewares/requireJwtAuth.js';
 import requireOwnershipOrAdmin from '../middlewares/requireOwnershipOrAdmin.js';
 
 const router = Router();
 
-router.get('/:id', requireJwtAuth, userController.getOne);
-router.get('/', requireJwtAuth, userController.get);
+router.get('/:id', requireJwtAuth, postController.getOne);
+router.get('/', requireJwtAuth, postController.get);
+router.post('/', requireJwtAuth, postController.create);
 router.put(
   '/:id',
   requireJwtAuth,
   requireOwnershipOrAdmin,
-  userController.update,
+  postController.update,
 );
 router.delete(
   '/:id',
   requireJwtAuth,
   requireOwnershipOrAdmin,
-  userController.remove,
+  postController.remove,
 );
 
 export default router;

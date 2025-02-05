@@ -1,24 +1,26 @@
 import { Router } from 'express';
 
-import userController from '../controllers/userController.js';
+import bookController from '../controllers/bookController.js';
 import requireJwtAuth from '../middlewares/requireJwtAuth.js';
 import requireOwnershipOrAdmin from '../middlewares/requireOwnershipOrAdmin.js';
 
 const router = Router();
 
-router.get('/:id', requireJwtAuth, userController.getOne);
-router.get('/', requireJwtAuth, userController.get);
+router.get('/:id', requireJwtAuth, bookController.getOne);
+router.get('/', requireJwtAuth, bookController.get);
+router.post('/', requireJwtAuth, bookController.create);
 router.put(
   '/:id',
   requireJwtAuth,
   requireOwnershipOrAdmin,
-  userController.update,
+  bookController.update,
 );
 router.delete(
   '/:id',
   requireJwtAuth,
   requireOwnershipOrAdmin,
-  userController.remove,
+  bookController.remove,
 );
+// NOTE: when verifying change owner to admin
 
 export default router;
