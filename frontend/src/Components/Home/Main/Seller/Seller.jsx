@@ -74,9 +74,10 @@ export default function Seller() {
                 <Input
                   type="number"
                   className="w-[6vw]"
+                  placeholder='   Wpisz cenę...'
                   sx={{
                     backgroundColor: 'white',
-                    borderRadius: '11px',
+                    borderRadius: '7px',
                     '&:before': {
                       borderBottom: 'none',
                     },
@@ -98,6 +99,7 @@ export default function Seller() {
               <br></br>
               <div className="ml-[2%]">
                 <Input
+                placeholder='   Szczegóły dot. książki sprzedawanej...'
                   type="text"
                   multiline
                   minRows={3}
@@ -105,7 +107,7 @@ export default function Seller() {
                   className="w-[40%] mb-2"
                   sx={{
                     backgroundColor: 'white',
-                    borderRadius: '11px',
+                    borderRadius: '7px',
                     '&:before': {
                       borderBottom: 'none',
                     },
@@ -125,7 +127,7 @@ export default function Seller() {
                 ></Input>
               </div>
               <br></br>
-              <div className="ml-[55%] mt-[-10%] w-[10vw]">
+              <div className="ml-[53%] mt-[-10%] w-[10vw]">
                 <Button
                   variant="contained"
                   fullWidth
