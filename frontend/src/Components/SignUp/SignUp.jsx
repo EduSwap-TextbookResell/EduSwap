@@ -7,7 +7,7 @@ import Info_panel from "./Addons/Info_panel.jsx";
 export default function SignUp() {
 	const { action } = useParams();
 	const isLogin = action === "login"; // Determines whether to show the login or registration form
-
+	console.log(action);
 	return (
 		<div
 			className="flex h-screen items-center justify-center bg-light_background bg-blend-darken"
