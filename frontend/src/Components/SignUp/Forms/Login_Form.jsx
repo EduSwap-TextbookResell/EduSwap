@@ -20,7 +20,7 @@ export default function Login_Form() {
       
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="w-full pt-8 max-w-md space-y-8">
-        {/* Nick Field */}
+        {/* Email Field */}
         <TextField
           label="Username"
           error={!!errors.nick}
