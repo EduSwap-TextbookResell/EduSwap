@@ -44,7 +44,7 @@ export default function RegistrationForm() {
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md space-y-6">
 				{/* Email Field */}
 				<TextField
-					label="Email"
+					label="Mail"
 					error={!!errors.email}
 					variant="outlined"
 					fullWidth
