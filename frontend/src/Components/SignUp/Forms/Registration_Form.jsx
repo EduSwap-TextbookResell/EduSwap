@@ -13,7 +13,7 @@ export default function RegistrationForm() {
 	} = useForm();
 	const city = watch("city", "");
 	const school = watch("school", "");
-
+	
 	const onSubmit = (data) => {
 		// eslint-disable-next-line no-unused-vars
 		const { confirmPassword, ...rest } = data;
@@ -44,7 +44,7 @@ export default function RegistrationForm() {
 			<form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md space-y-6">
 				{/* Email Field */}
 				<TextField
-					label="Mail"
+					label="Email"
 					error={!!errors.email}
 					variant="outlined"
 					fullWidth
