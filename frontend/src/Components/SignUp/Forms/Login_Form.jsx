@@ -22,22 +22,16 @@ export default function Login_Form() {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full pt-8 max-w-md space-y-8">
         {/* Email Field */}
         <TextField
-          label="Username"
-          error={!!errors.nick}
+          label="Email"
+          error={!!errors.email}
           variant="outlined"
           fullWidth
           size="small"
-          {...register('username', {
-            required: 'Username jest wymagany',
-            pattern: {
-              value: /^[A-Za-z0-9_]+$/i,
-              message: 'Username może posiadać tylko literki, cyferki oraz podłogi',
-            },
-          })}
+          {...register('email')}
         />
-        {errors.nick && (
+        {errors.email && (
           <Typography color="error" className="text-sm">
-            {errors.nick.message}
+            {errors.email.message}
           </Typography>
         )}
 
@@ -49,13 +43,7 @@ export default function Login_Form() {
           type="password"
           fullWidth
           size="small"
-          {...register('password', {
-            required: 'Hasło jest wymagane',
-            minLength: {
-              value: 6,
-              message: 'Hasło musi posiadać min. 6 znaków',
-            },
-          })}
+          {...register('password')}
         />
         {errors.password && (
           <Typography color="error" className="text-sm">
