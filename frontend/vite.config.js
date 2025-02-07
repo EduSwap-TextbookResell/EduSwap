@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       host: true,
       historyApiFallback: true,
+      watch: {
+        usePolling: true,
+      },
     },
   };
 });
