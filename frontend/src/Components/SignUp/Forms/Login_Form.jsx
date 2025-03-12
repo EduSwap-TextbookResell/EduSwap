@@ -1,13 +1,33 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TextField, Typography, Button } from '@mui/material';
-
+import axios from 'axios';
 export default function Login_Form() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/auth/login', {
+        email: data.email,
+        password: data.password,
+      });
+      if (response.status === 200) {
+        // get username to show later
+        const loggedUser = response.data.username;
+        // Save the username in local storage
+        localStorage.setItem('loggedUser', loggedUser);
+        navigate('/');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        alert('Invalid email or password');
+      } else {
+        console.log(error);
+      }
+    }
   };
+  
+
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-8">
