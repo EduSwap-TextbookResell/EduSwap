@@ -75,7 +75,7 @@ export default function Seller() {
       level: range_school,
       type: type_school,
       price,
-      details,
+      title: details,
       user: user,
     };
   
