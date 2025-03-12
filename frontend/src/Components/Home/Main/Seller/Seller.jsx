@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input, Button } from '@mui/material';
 import Form_Creator from '../Form_Creator.jsx';
 import axios from 'axios';
 export default function Seller() {
+  const [user, setUser] = useState(null);
   const [school_class, setClass] = useState('');
   const [subject, setSubject] = useState('');
   const [range_school, setRange_school] = useState('');
@@ -59,7 +60,15 @@ export default function Seller() {
       ],
     },
   ];
+  useEffect(() => {
+	  const loggedUser = localStorage.getItem('loggedUser');
+	  if (loggedUser) {
+      const userData = JSON.parse(loggedUser);
+      setUser({ userData });
+	  }
+	}, []);
   const handleSubmit = async () => {
+    console.log(user)
     const bookData = {
       class: school_class,
       subject,
@@ -67,9 +76,17 @@ export default function Seller() {
       type: type_school,
       price,
       details,
+      user: user,
     };
-
-    console.log(bookData);
+  
+    console.log('Submitting book:', bookData);
+    // cant add book- lack of token in local storage
+    try {
+      const response = await axios.post('http://localhost:3000/api/book/', bookData);
+      console.log('Book added:', response.data);
+    } catch (error) {
+      console.error('Error adding book:', error.response?.data || error.message);
+    }
   };
   return (
     <div className="h-[73vh] w-full">

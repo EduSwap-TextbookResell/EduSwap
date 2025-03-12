@@ -4,21 +4,21 @@ import Background_Img from "../../assets/Main/background.png";
 import Main from './Main/Main.jsx';
 
 export default function Home() {
-	const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-	useEffect(() => {
-	  const loggedUser = localStorage.getItem('loggedUser');
-	  if (loggedUser) {
-		setUser({username: loggedUser});
-	  }
-	}, []);
-	if(user){
-	console.log(user.username);
-	}
-	const logout = () => {
-	  localStorage.removeItem('loggedUser');
-	  setUser(null);
-	};
+  useEffect(() => {
+    const loggedUser = localStorage.getItem('loggedUser');
+    if (loggedUser) {
+      const userData = JSON.parse(loggedUser);
+      setUser({ username: userData.username });
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem('loggedUser');
+    setUser(null);
+  };
+
   return (
     <div className="bg-light_background bg-blend-darken h-full" style={{ backgroundImage: `url(${Background_Img})` }}>
       <Navbar user={user} logout={logout} />
