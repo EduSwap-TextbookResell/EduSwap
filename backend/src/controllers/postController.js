@@ -1,13 +1,60 @@
 import Post from '../models/post.js';
+import Book from '../models/book.js';
 import { config } from '../configs/index.js';
 
 const get = async (req, res, next) => {
   const limit = parseInt(req.query.limit) || config.general.itemsPerPage;
   const page = parseInt(req.query.page) || 1;
 
-  const query = {}; // TODO: search and filter posts
+  const {
+    city,
+    school,
+    state,
+    minPrice,
+    maxPrice,
+    title,
+    subject,
+    type,
+    class: bookClass,
+    isbn,
+    level,
+    search,
+  } = req.query;
+
+  const query = {};
+
+  if (city) query.city = new RegExp(city, 'i');
+  if (school) query.school = new RegExp(school, 'i');
+  if (state) query.state = state;
+
+  if (minPrice || maxPrice) {
+    query.price = {};
+    if (minPrice) query.price.$gte = parseFloat(minPrice);
+    if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+  }
+
+  const bookQuery = {};
+  if (title) bookQuery.title = new RegExp(title, 'i');
+  if (subject) bookQuery.subject = new RegExp(subject, 'i');
+  if (type) bookQuery.type = type;
+  if (bookClass) bookQuery.class = parseInt(bookClass);
+  if (isbn) bookQuery.isbn = isbn;
+  if (level) bookQuery.level = level;
+
+  if (search) {
+    bookQuery.$or = [
+      { title: new RegExp(search, 'i') },
+      { subject: new RegExp(search, 'i') },
+      { isbn: search },
+    ];
+  }
 
   try {
+    if (Object.keys(bookQuery).length > 0) {
+      const matchingBooks = await Book.find(bookQuery).select('_id');
+      query.book = { $in: matchingBooks.map((b) => b._id) };
+    }
+
     const posts = await Post.find(query)
       .populate('user')
       .populate('book')

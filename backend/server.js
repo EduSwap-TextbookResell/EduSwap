@@ -2,12 +2,10 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
-import passport from 'passport';
 
 import logger from './src/services/logger.js';
 import routes from './src/routes/index.js';
 import { config } from './src/configs/index.js';
-import './src/services/jwtStrategy.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,8 +13,6 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
-app.use(passport.initialize());
 
 app.use((req, res, next) => {
   const { method, url, headers, body, params, ip } = req;

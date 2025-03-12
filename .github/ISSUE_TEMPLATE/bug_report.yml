@@ -1,0 +1,38 @@
+name: "Bug report"
+description: Report an issue
+labels: ['triage: bug']
+body:
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: Bug description
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide steps that can reproduce the problem you ran into.
+      placeholder: Reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: 'Include browser console and local/docker logs. Please try not to insert an image but copy paste the log text.'
+      render: shell
+    validations:
+      required: true
+  - type: checkbox
+    id: quickfixes
+    attributes:
+      label: Have you tried these common fixes?
+      options:
+        - label: `pnpm i`
+        - label: `docker compose up --build`
+        - label: remove `node_modules` directory
+        - label: `docker volume rm -f eduswap_mongo-data`
+        - label: clone fresh project
