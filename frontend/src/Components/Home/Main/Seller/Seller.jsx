@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Input, Button } from '@mui/material';
-import Form_Creator from '../Form_Creator';
+import Form_Creator from '../Form_Creator.jsx';
+import axios from 'axios';
 export default function Seller() {
   const [school_class, setClass] = useState('');
   const [subject, setSubject] = useState('');
   const [range_school, setRange_school] = useState('');
   const [type_school, setType_school] = useState('');
   const [details, setDetails] = useState('');
-
+  const [price, setPrice] = useState(0);
   const options = [
     {
       label: 'Klasa',
@@ -17,6 +18,7 @@ export default function Seller() {
         { value: 'klasa1', label: 'Klasa 1' },
         { value: 'klasa2', label: 'Klasa 2' },
         { value: 'klasa3', label: 'Klasa 3' },
+        { value: 'klasa4', label: 'Klasa 4' }
       ],
     },
     {
@@ -24,9 +26,17 @@ export default function Seller() {
       value: subject,
       onChange: (e) => setSubject(e.target.value),
       items: [
-        { value: 'subj1', label: 'Matematyka' },
-        { value: 'subj2', label: 'Fizyka' },
-        { value: 'subj3', label: 'Angielski' },
+        { value: 'math', label: 'Matematyka' },
+        { value: 'polish', label: 'Język Polski' },
+        { value: 'english', label: 'Język Angielski' },
+        { value: 'history', label: 'Historia' },
+        { value: 'biology', label: 'Biologia' },
+        { value: 'geography', label: 'Geografia' },
+        { value: 'chemistry', label: 'Chemia' },
+        { value: 'philosophy', label: 'Filozofia' },
+        { value: 'arts', label: 'Plastyka' },
+        { value: 'religion', label: 'Religia' },
+        { value: 'other', label: 'Inne' }
       ],
     },
     {
@@ -49,6 +59,18 @@ export default function Seller() {
       ],
     },
   ];
+  const handleSubmit = async () => {
+    const bookData = {
+      class: school_class,
+      subject,
+      level: range_school,
+      type: type_school,
+      price,
+      details,
+    };
+
+    console.log(bookData);
+  };
   return (
     <div className="h-[73vh] w-full">
       <div className="m-auto h-[65%]">
@@ -75,6 +97,7 @@ export default function Seller() {
                   type="number"
                   className="w-[6vw]"
                   placeholder='   Wpisz cenę...'
+                  onChange={(e) => setPrice(e.target.value)}
                   sx={{
                     backgroundColor: 'white',
                     borderRadius: '7px',
@@ -105,6 +128,7 @@ export default function Seller() {
                   minRows={3}
                   maxRows={5}
                   className="w-[40%] mb-2"
+                  onChange={(e) => setDetails(e.target.value)}
                   sx={{
                     backgroundColor: 'white',
                     borderRadius: '7px',
@@ -139,6 +163,7 @@ export default function Seller() {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
+                  onClick={handleSubmit}
                 >
                   Dodaj
                 </Button>
