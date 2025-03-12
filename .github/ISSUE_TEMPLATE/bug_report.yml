@@ -1,6 +1,6 @@
-name: "Bug report"
+name: Bug report
 description: Report an issue
-labels: ['triage: bug']
+labels: ["bug"]
 body:
   - type: textarea
     id: bug-description
@@ -26,13 +26,13 @@ body:
       render: shell
     validations:
       required: true
-  - type: checkbox
+  - type: checkboxes
     id: quickfixes
     attributes:
       label: Have you tried these common fixes?
       options:
-        - label: `pnpm i`
-        - label: `docker compose up --build`
-        - label: remove `node_modules` directory
-        - label: `docker volume rm -f eduswap_mongo-data`
+        - label: pnpm i
+        - label: docker compose up --build
+        - label: remove node_modules directory
+        - label: docker volume rm -f eduswap_mongo-data
         - label: clone fresh project
