@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky",
     "build": "docker compose build",
-    "dev": "docker compose up",
+    "dev": "docker compose up --build",
     "format": "pnpm -C backend run format && pnpm -C frontend run format",
     "format:check": "pnpm -C backend run format:check && pnpm -C frontend run format:check",
     "lint": "pnpm -C backend run lint && pnpm -C frontend run lint"

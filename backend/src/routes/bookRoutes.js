@@ -3,6 +3,7 @@ import { Router } from 'express';
 import bookController from '../controllers/bookController.js';
 import requireJwtAuth from '../middlewares/requireJwtAuth.js';
 import requireOwnershipOrAdmin from '../middlewares/requireOwnershipOrAdmin.js';
+import Book from '../models/book.js';
 
 const router = Router();
 
@@ -12,13 +13,13 @@ router.post('/', requireJwtAuth, bookController.create);
 router.put(
   '/:id',
   requireJwtAuth,
-  requireOwnershipOrAdmin,
+  requireOwnershipOrAdmin(Book),
   bookController.update,
 );
 router.delete(
   '/:id',
   requireJwtAuth,
-  requireOwnershipOrAdmin,
+  requireOwnershipOrAdmin(Book),
   bookController.remove,
 );
 // NOTE: when verifying change owner to admin
