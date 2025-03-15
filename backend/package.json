@@ -9,6 +9,7 @@
     "start": "node server.js",
     "lint": "eslint --fix './**/*.{js,cjs,mjs}'",
     "format": "prettier --write './**/*.{js,cjs,mjs,md,json}'",
+    "format:check": "prettier --check './**/*.{js,cjs,mjs,md,json}'",
     "lint-staged": "lint-staged"
   },
   "dependencies": {
@@ -18,8 +19,6 @@
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
     "winston": "^3.15.0",
     "winston-daily-rotate-file": "^5.0.0",
     "zod": "^3.23.8"

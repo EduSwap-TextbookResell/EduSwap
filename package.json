@@ -6,9 +6,10 @@
   "scripts": {
     "prepare": "husky",
     "build": "docker compose build",
-    "dev": "docker compose up",
-    "format": "pnpm -C backend run format && pnpm -C backend run format",
-    "lint": "pnpm -C backend run lint && pnpm -C backend run lint"
+    "dev": "docker compose up --build",
+    "format": "pnpm -C backend run format && pnpm -C frontend run format",
+    "format:check": "pnpm -C backend run format:check && pnpm -C frontend run format:check",
+    "lint": "pnpm -C backend run lint && pnpm -C frontend run lint"
   },
   "devDependencies": {
     "husky": "^9.1.6"

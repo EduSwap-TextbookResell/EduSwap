@@ -3,23 +3,29 @@ import { Link } from 'react-router-dom';
 import { TextField, Typography, Button } from '@mui/material';
 
 export default function Login_Form() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-8">
+    <div className="flex h-full flex-col items-center justify-center p-8">
       {/* Header */}
-      <div className="mb-12 text-3xl font-bold text-center">
-        Witamy w 
-        <span className="text-dark_coral"> E</span>du
+      <div className="mb-12 text-center text-3xl font-bold">
+        Witamy w<span className="text-dark_coral"> E</span>du
         <span className="text-dark_coral">S</span>wap!
       </div>
-      
+
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full pt-8 max-w-md space-y-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md space-y-8 pt-8"
+      >
         {/* Nick Field */}
         <TextField
           label="Username"
@@ -31,7 +37,8 @@ export default function Login_Form() {
             required: 'Username jest wymagany',
             pattern: {
               value: /^[A-Za-z0-9_]+$/i,
-              message: 'Username może posiadać tylko literki, cyferki oraz podłogi',
+              message:
+                'Username może posiadać tylko literki, cyferki oraz podłogi',
             },
           })}
         />
@@ -64,9 +71,12 @@ export default function Login_Form() {
         )}
 
         {/* Signup Link */}
-        <div className="text-center text-sm mt-4">
+        <div className="mt-4 text-center text-sm">
           Nie masz konta?{' '}
-          <Link to="/signup/register" className="text-dark_coral hover:underline hover:underline-offset-2 hover:decoration-light-coral">
+          <Link
+            to="/signup/register"
+            className="hover:decoration-light-coral text-dark_coral hover:underline hover:underline-offset-2"
+          >
             Zarejestruj się
           </Link>
         </div>
