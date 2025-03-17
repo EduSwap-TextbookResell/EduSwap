@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      eduswap:
+        specifier: 'file:'
+        version: 'file:'
     devDependencies:
       husky:
         specifier: ^9.1.6
@@ -14,11 +18,16 @@ importers:
 
 packages:
 
+  'eduswap@file:':
+    resolution: {directory: '', type: directory}
+
   husky@9.1.6:
     resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
     engines: {node: '>=18'}
     hasBin: true
 
 snapshots:
+
+  'eduswap@file:': {}
 
   husky@9.1.6: {}
