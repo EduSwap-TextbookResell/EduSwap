@@ -57,7 +57,7 @@ const register = async (req, res, next) => {
   }
 };
 
-const uniqueUser = async (req, res, next) => {
+const uniqueUsername = async (req, res, next) => {
   const { username } = req.body;
 
   try {
@@ -79,5 +79,5 @@ const uniqueUser = async (req, res, next) => {
 export default {
   login,
   register,
-  uniqueUser,
+  uniqueUsername,
 };

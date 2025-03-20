@@ -29,7 +29,7 @@ export default function RegistrationStepTwo({
 
 		const delayDebounceFn = setTimeout(async () => {
 			try {
-				const response = await axios.post("http://localhost:3000/api/auth/uniqueUser", { username });
+				const response = await axios.post("http://localhost:3000/api/auth/uniqueUsername", { username });
 
 				if (response.status === 200) {
 					setStatus({ loading: false, error: null, available: true });
