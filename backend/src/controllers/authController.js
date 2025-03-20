@@ -57,7 +57,27 @@ const register = async (req, res, next) => {
   }
 };
 
+const uniqueUser = async (req, res, next) => {
+  const { username } = req.body;
+
+  try {
+    const existingUser = await User.findOne({
+      username: { $regex: `^${username}$`, $options: 'i' },
+    });
+
+    if (existingUser) {
+      const message = 'Username already in use';
+      return res.status(409).json({ message });
+    }
+
+    res.status(200).json({ message: 'Username is available' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   login,
   register,
+  uniqueUser,
 };
