@@ -19,8 +19,6 @@ export default function RegistrationStepThree({ flipBookRef, isMobile, prevStep 
 		setLoading(true);
 
 		try {
-			// Example: just sending city/school
-			// In reality, you'd gather data from steps 1 + 2 as well
 			const response = await axios.post("http://localhost:3000/api/auth/register", data);
 			setGlobalSuccess("Rejestracja przebiegła pomyślnie!");
 			console.log(response.data);
